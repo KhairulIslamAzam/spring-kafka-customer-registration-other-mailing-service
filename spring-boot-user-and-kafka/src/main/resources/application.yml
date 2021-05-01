@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: user-mail-event-producer
+    # The commented value for `active` can be replaced with valid Spring profiles to load.
+    # Otherwise, it will be filled in by gradle when building the JAR file
+    # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
+  profiles:
+    active: local #spring.profiles.active#
+server:
+  port: ${PORT:8888}
+---
+spring:
+  kafka:
+    #    template:
+    #      default-topic: user-mail-events
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    admin:
+      properties:
+        bootstrap.servers: localhost:9092
+
+customer:
+  topic:
+    name:
+      message: message
+      mail: customer-mail-events
+---
+#---
+#tpd:
+#  topic-name: advice-topic
+#  messages-per-request: 10
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: dev
+#  kafka:
+#    producer:
+#      bootstrap-servers: dev:9092
+#      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: prod
+#  kafka:
+#    producer:
+#      bootstrap-servers: dev:9092
+#      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+---
+#spring:
+#  datasource:
+#    platform: org.hibernate.dialect.PostgreSQLDialect
+#    driverClassName: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/user_with_email
+#    username: postgres
+#    password: 1234
+#  jpa:
+#    open-in-view: false
+#    hibernate.ddl-auto: update
+#    show-sql: true
